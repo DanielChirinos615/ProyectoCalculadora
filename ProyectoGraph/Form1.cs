@@ -21,7 +21,7 @@ namespace ProyectoGraph
         static double E = 200000;
         static double FyA36 = 250;
         static double FyA572 = 350;
-        double KLr = 0, KLx = 0, KLz = 0, Fy = 0;
+        double KLr = 0, KLx = 0, KLz = 0, Fy;
         Dictionary<string, double> tiposDeAcero = new Dictionary<string, double>();
         private Dictionary<string, SeccionData> seccionesData = new Dictionary<string, SeccionData>();
         public Form1()
@@ -136,7 +136,7 @@ namespace ProyectoGraph
 
             if (tiposDeAcero.TryGetValue(tipoSeleccionado, out double valorAcero))
             {
-                
+                Fy = valorAcero;
                 labelAcero.Text = $"Valor del acero: {valorAcero}";
             }
         }
@@ -230,6 +230,38 @@ namespace ProyectoGraph
             {
                 labelr.Text = $"KLr: {KLr}";
             }
+            //Calcular los resultados faltantes
+            double Cc = (Math.PI * Math.Sqrt(2 * E / Fy));
+            double Fa = 0;
+            double Fcr1 = ((1.677 * 0.677) * (wt / (80 / Math.Sqrt(Fy / 6.9444)))) * Fy;
+            double Fcr2 = (0.0332 * Math.Pow(Math.PI, 2) * E) / Math.Pow(wt, 2);
+
+            if (KLr > Cc)
+            {
+                Fa = (Math.Pow(Math.PI, 2) * E) / (Math.Pow(KLr, 2));
+            }
+            else if (KLr < Cc && wt < (80 / Math.Sqrt(Fy / 6.9444)))
+            {
+                Fa = (1 - 0.5 * (Math.Pow((KLr / Cc), 2))) * Fy;
+            }
+            else if (KLr < Cc && wt > (80 / Math.Sqrt(Fy / 6.9444)) && wt <= 144 / Math.Sqrt(Fy / 6.9444))
+            {
+                Fa = (1 - 0.5 * (Math.Pow((KLr / Cc), 2))) * Fcr1;
+            }
+            else if (KLr < Cc && wt > 144 / Math.Sqrt(Fy / 6.9444))
+            {
+                Fa = (1 - 0.5 * (Math.Pow((KLr / Cc), 2))) * Fcr2;
+            }
+
+            double Ca = (area * Fa) * 100;
+
+            labelr.Text = $"KL/r: {KLr}";
+            labelCc.Text = $"Cc: {Cc}";
+            labelFa.Text = $"Fa: {Fa}";
+            labelwt.Text = $"W / T: {wt}";
+            labelfy.Text = $"Fy: {Fy}";
+            labelCa.Text = $"Ca: {Ca}";
+
         }
         private double CalcularResultado(double resultado, string direccion)
         {
@@ -320,7 +352,6 @@ namespace ProyectoGraph
 
             return double.NaN;
         }
-
 
     }
 }

@@ -55,11 +55,11 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.labelCc = new System.Windows.Forms.Label();
+            this.labelFa = new System.Windows.Forms.Label();
+            this.labelwt = new System.Windows.Forms.Label();
+            this.labelfy = new System.Windows.Forms.Label();
+            this.labelCa = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -327,50 +327,50 @@
             this.linkLabel1.Text = "SSG CAPACITACIONES";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // label9
+            // labelCc
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 41);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(23, 13);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "Cc:";
+            this.labelCc.AutoSize = true;
+            this.labelCc.Location = new System.Drawing.Point(6, 41);
+            this.labelCc.Name = "labelCc";
+            this.labelCc.Size = new System.Drawing.Size(23, 13);
+            this.labelCc.TabIndex = 3;
+            this.labelCc.Text = "Cc:";
             // 
-            // label10
+            // labelFa
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(5, 65);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(22, 13);
-            this.label10.TabIndex = 4;
-            this.label10.Text = "Fa:";
+            this.labelFa.AutoSize = true;
+            this.labelFa.Location = new System.Drawing.Point(5, 65);
+            this.labelFa.Name = "labelFa";
+            this.labelFa.Size = new System.Drawing.Size(22, 13);
+            this.labelFa.TabIndex = 4;
+            this.labelFa.Text = "Fa:";
             // 
-            // label11
+            // labelwt
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(5, 89);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(39, 13);
-            this.label11.TabIndex = 5;
-            this.label11.Text = "W / T:";
+            this.labelwt.AutoSize = true;
+            this.labelwt.Location = new System.Drawing.Point(5, 89);
+            this.labelwt.Name = "labelwt";
+            this.labelwt.Size = new System.Drawing.Size(39, 13);
+            this.labelwt.TabIndex = 5;
+            this.labelwt.Text = "W / T:";
             // 
-            // label12
+            // labelfy
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 113);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(24, 13);
-            this.label12.TabIndex = 6;
-            this.label12.Text = "Fy: ";
+            this.labelfy.AutoSize = true;
+            this.labelfy.Location = new System.Drawing.Point(7, 113);
+            this.labelfy.Name = "labelfy";
+            this.labelfy.Size = new System.Drawing.Size(24, 13);
+            this.labelfy.TabIndex = 6;
+            this.labelfy.Text = "Fy: ";
             // 
-            // label13
+            // labelCa
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 16);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(26, 13);
-            this.label13.TabIndex = 7;
-            this.label13.Text = "Ca: ";
+            this.labelCa.AutoSize = true;
+            this.labelCa.Location = new System.Drawing.Point(7, 16);
+            this.labelCa.Name = "labelCa";
+            this.labelCa.Size = new System.Drawing.Size(26, 13);
+            this.labelCa.TabIndex = 7;
+            this.labelCa.Text = "Ca: ";
             // 
             // groupBox2
             // 
@@ -386,10 +386,10 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.labelr);
-            this.groupBox5.Controls.Add(this.label9);
-            this.groupBox5.Controls.Add(this.label10);
-            this.groupBox5.Controls.Add(this.label11);
-            this.groupBox5.Controls.Add(this.label12);
+            this.groupBox5.Controls.Add(this.labelCc);
+            this.groupBox5.Controls.Add(this.labelFa);
+            this.groupBox5.Controls.Add(this.labelwt);
+            this.groupBox5.Controls.Add(this.labelfy);
             this.groupBox5.Location = new System.Drawing.Point(15, 336);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(382, 132);
@@ -399,7 +399,7 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.label13);
+            this.groupBox6.Controls.Add(this.labelCa);
             this.groupBox6.Location = new System.Drawing.Point(15, 474);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(382, 37);
@@ -473,11 +473,11 @@
         private System.Windows.Forms.Label labelr;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label labelFa;
+        private System.Windows.Forms.Label labelCc;
+        private System.Windows.Forms.Label labelwt;
+        private System.Windows.Forms.Label labelfy;
+        private System.Windows.Forms.Label labelCa;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox6;
