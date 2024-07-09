@@ -11,11 +11,12 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection.Emit;
 using ExcelLicenseContext = OfficeOpenXml.LicenseContext;
+using Proyecto;
 
 
 namespace ProyectoGraph
 {
-    public partial class Form1 : Form
+    public partial class Calculadora : Form
     {
         static double pi = 3.1416;
         static double E = 200000;
@@ -24,7 +25,7 @@ namespace ProyectoGraph
         double KLr = 0, KLx = 0, KLz = 0, Fy;
         Dictionary<string, double> tiposDeAcero = new Dictionary<string, double>();
         private Dictionary<string, SeccionData> seccionesData = new Dictionary<string, SeccionData>();
-        public Form1()
+        public Calculadora()
         {
             InitializeComponent();
             ExcelPackage.LicenseContext = ExcelLicenseContext.NonCommercial;
@@ -39,7 +40,10 @@ namespace ProyectoGraph
 
         private void CargarDatosEnComboBox()
         {
-            string archivo = "C:\\Users\\danie\\source\\repos\\ProyectoGraph\\ProyectoGraph\\Assets\\secciones.xlsx"; 
+            string fileName = "secciones.xlsx";
+
+            string archivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+
 
             if (File.Exists(archivo))
             {
@@ -280,78 +284,16 @@ namespace ProyectoGraph
         }
         private double MostrarMenuOpciones(double resultado, int tipoMenu, string direccion)
         {
-            using (Form opcionesForm = new Form())
+            using (Opciones opcionesForm = new Opciones(resultado, tipoMenu, direccion))
             {
-                opcionesForm.Text = $"Seleccionar Opción para {direccion}";
-                opcionesForm.Width = 300;
-                opcionesForm.Height = 200;
-
-
-                System.Windows.Forms.Label label = new System.Windows.Forms.Label();
-                opcionesForm.Controls.Add(label);
-
-                ComboBox comboBoxOpciones = new ComboBox() { Left = 50, Top = 50, Width = 200 };
-
-                if (tipoMenu == 1)
-                {
-                    comboBoxOpciones.Items.Add("No excéntrico");
-                    comboBoxOpciones.Items.Add("Excéntrico en un extremo");
-                    comboBoxOpciones.Items.Add("Excéntrico en ambos extremos");
-                }
-                else if (tipoMenu == 2)
-                {
-                    comboBoxOpciones.Items.Add("Sin restricción a la rotación");
-                    comboBoxOpciones.Items.Add("Restricción rotacional en un extremo");
-                    comboBoxOpciones.Items.Add("Restricción rotacional en ambos extremos");
-                }
-
-                comboBoxOpciones.SelectedIndex = 0;
-
-                Button buttonAceptar = new Button() { Text = "Aceptar", Left = 100, Width = 100, Top = 100 };
-                buttonAceptar.DialogResult = DialogResult.OK;
-
-                opcionesForm.Controls.Add(comboBoxOpciones);
-                opcionesForm.Controls.Add(buttonAceptar);
-                opcionesForm.AcceptButton = buttonAceptar;
-
                 if (opcionesForm.ShowDialog() == DialogResult.OK)
                 {
-                    string opcionSeleccionada = comboBoxOpciones.SelectedItem.ToString();
-                    double resultadoCalculado = resultado;
-
-                    switch (opcionSeleccionada)
-                    {
-                        case "No excéntrico":
-                            resultadoCalculado = resultado;
-                            break;
-                        case "Excéntrico en un extremo":
-                            resultadoCalculado = 30 + 0.75 * resultado;
-                            break;
-                        case "Excéntrico en ambos extremos":
-                            resultadoCalculado = 60 + 0.5 * resultado;
-                            break;
-                        case "Sin restricción a la rotación":
-                            resultadoCalculado = resultado;
-                            break;
-                        case "Restricción rotacional en un extremo":
-                            resultadoCalculado = 28.6 + 0.762 * resultado;
-                            break;
-                        case "Restricción rotacional en ambos extremos":
-                            resultadoCalculado = 46.2 + 0.615 * resultado;
-                            break;
-                        default:
-                            MessageBox.Show("Opción no válida");
-                            return double.NaN;
-                    }
-
-                    string resultadoTexto = $"KL/r{direccion.ToLower()} = {resultadoCalculado}";
-                    MessageBox.Show(resultadoTexto);
+                    string opcionSeleccionada = opcionesForm.OpcionSeleccionada;
+                    double resultadoCalculado = opcionesForm.ResultadoCalculado;
                     return resultadoCalculado;
                 }
             }
-
             return double.NaN;
         }
-
     }
 }

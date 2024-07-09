@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -6,18 +7,18 @@ using System.Runtime.InteropServices;
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
 // asociada con un ensamblado.
 [assembly: AssemblyTitle("ProyectoGraph")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Proyecto en progreso")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Daniel")]
 [assembly: AssemblyProduct("ProyectoGraph")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Daniel")]
 [assembly: AssemblyCulture("")]
 
 // Si establece ComVisible en false, los tipos de este ensamblado no estarán visibles 
 // para los componentes COM.  Si es necesario obtener acceso a un tipo en este ensamblado desde 
 // COM, establezca el atributo ComVisible en true en este tipo.
-[assembly: ComVisible(false)]
+[assembly: ComVisible(true)]
 
 // El siguiente GUID sirve como id. de typelib si este proyecto se expone a COM.
 [assembly: Guid("a8c8a762-fe25-45d9-9873-fde9e4bd6492")]
@@ -34,3 +35,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguage("es-MX")]
