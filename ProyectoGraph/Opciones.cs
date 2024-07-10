@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +13,23 @@ namespace Proyecto
 {
     public partial class Opciones : Form
     {
+        PictureBox pictureBox;
         public string OpcionSeleccionada { get; private set; }
         public double ResultadoCalculado { get; private set; }
 
         public Opciones(double resultado, int tipoMenu, string direccion)
         {
             InitializeComponent();
-            base.Text = $"Seleccionar Opción para {direccion}";
-            Width = 300;
-            Height = 200;
 
-            // Ajusta las opciones del ComboBox según el tipo de menú
+            if (pictureBox == null)
+            {
+                pictureBox = new PictureBox();
+                pictureBox.Location = new System.Drawing.Point(13, 143); 
+                pictureBox.Size = new System.Drawing.Size(275, 334); 
+                this.Controls.Add(pictureBox);
+            }
+            LabelText.Text = $"Seleccionar Opción para {direccion}";
+
             if (tipoMenu == 1)
             {
                 comboBoxOpciones.Items.Add("No excéntrico");
@@ -52,6 +59,7 @@ namespace Proyecto
                     MessageBox.Show("Seleccione una opción válida.");
                 }
             };
+            comboBoxOpciones.SelectedIndexChanged += comboBoxOpciones_SelectedIndexChanged;
         }
 
         private double CalcularResultado(string opcionSeleccionada, double resultado)
@@ -79,6 +87,51 @@ namespace Proyecto
 
         private void acceptButtom_Click(object sender, EventArgs e)
         {
+        }
+
+        private void comboBoxOpciones_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string opcion = comboBoxOpciones.SelectedItem?.ToString();
+            if (opcion != null)
+            {
+                try
+                {
+                    switch (opcion)
+                    {
+                        case "No excéntrico":
+                            pictureBox.Image = Image.FromFile("Assets//excentricidad.png");
+                            break;
+                        case "Excéntrico en un extremo":
+                            pictureBox.Image = Image.FromFile("Assets//excentricidad.png");
+                            break;
+                        case "Excéntrico en ambos extremos":
+                            pictureBox.Image = Image.FromFile("Assets//excentricidad.png");
+                            break;
+                        case "Sin restricción a la rotación":
+                            pictureBox.Image = Image.FromFile("Assets//restriccion.png");
+                            break;
+                        case "Restricción rotacional en un extremo":
+                            pictureBox.Image = Image.FromFile("Assets//restriccion.png");
+                            break;
+                        case "Restricción rotacional en ambos extremos":
+                            pictureBox.Image = Image.FromFile("Assets//restriccion.png");
+                            break;
+                        default:
+                            pictureBox.Image = null;
+                            break;
+                    }
+                    //excentricidad.png
+                    //restriccion.png
+                }
+                catch (FileNotFoundException ex)
+                {
+                    MessageBox.Show($"Archivo no encontrado: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+                }
+            }
         }
     }
 }

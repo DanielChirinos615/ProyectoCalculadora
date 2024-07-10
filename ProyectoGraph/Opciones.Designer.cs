@@ -30,12 +30,12 @@
         {
             this.AcceptButton = new System.Windows.Forms.Button();
             this.comboBoxOpciones = new System.Windows.Forms.ComboBox();
-            this.Text = new System.Windows.Forms.Label();
+            this.LabelText = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // AcceptButton
             // 
-            this.AcceptButton.Location = new System.Drawing.Point(112, 120);
+            this.AcceptButton.Location = new System.Drawing.Point(113, 97);
             this.AcceptButton.Name = "AcceptButton";
             this.AcceptButton.Size = new System.Drawing.Size(75, 23);
             this.AcceptButton.TabIndex = 1;
@@ -49,21 +49,22 @@
             this.comboBoxOpciones.Name = "comboBoxOpciones";
             this.comboBoxOpciones.Size = new System.Drawing.Size(200, 21);
             this.comboBoxOpciones.TabIndex = 0;
+            this.comboBoxOpciones.SelectedIndexChanged += new System.EventHandler(this.comboBoxOpciones_SelectedIndexChanged);
             // 
-            // Text
+            // LabelText
             // 
-            this.Text.AutoSize = true;
-            this.Text.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Text.Location = new System.Drawing.Point(62, 20);
-            this.Text.Name = "Text";
-            this.Text.Size = new System.Drawing.Size(169, 20);
-            this.Text.TabIndex = 1;
-            this.Text.Text = "Seleccione una opción";
+            this.LabelText.AutoSize = true;
+            this.LabelText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelText.Location = new System.Drawing.Point(55, 18);
+            this.LabelText.Name = "LabelText";
+            this.LabelText.Size = new System.Drawing.Size(169, 20);
+            this.LabelText.TabIndex = 1;
+            this.LabelText.Text = "Seleccione una opción";
             // 
             // Opciones
             // 
-            this.ClientSize = new System.Drawing.Size(300, 200);
-            this.Controls.Add(this.Text);
+            this.ClientSize = new System.Drawing.Size(300, 498);
+            this.Controls.Add(this.LabelText);
             this.Controls.Add(this.comboBoxOpciones);
             this.Controls.Add(this.AcceptButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -76,8 +77,10 @@
 
         #endregion
 
+
+
         private System.Windows.Forms.Button AcceptButton;
         private System.Windows.Forms.ComboBox comboBoxOpciones;
-        private System.Windows.Forms.Label Text;
+        private System.Windows.Forms.Label LabelText;
     }
 }
