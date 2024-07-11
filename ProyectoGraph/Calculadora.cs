@@ -10,6 +10,7 @@ using OfficeOpenXml;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection.Emit;
+using Microsoft.VisualBasic;
 using ExcelLicenseContext = OfficeOpenXml.LicenseContext;
 using Proyecto;
 
@@ -165,10 +166,16 @@ namespace ProyectoGraph
 
         private void Calculo_Click(object sender, EventArgs e)
         {
+            if (Fy == 0)
+            {
+                MessageBox.Show("Por favor, seleccione un tipo de acero.", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; 
+            }
+
             double LX, LZ;
             if (!double.TryParse(XBox.Text, out LX) || !double.TryParse(ZBox.Text, out LZ))
             {
-                MessageBox.Show("Por favor, ingrese valores válidos para las longitudes.");
+                MessageBox.Show("Por favor, ingrese valores válidos para las longitudes.","", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

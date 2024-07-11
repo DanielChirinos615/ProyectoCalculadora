@@ -25,7 +25,8 @@ namespace Proyecto
             {
                 pictureBox = new PictureBox();
                 pictureBox.Location = new System.Drawing.Point(13, 143); 
-                pictureBox.Size = new System.Drawing.Size(275, 334); 
+                pictureBox.Size = new System.Drawing.Size(297, 320);
+                this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle; 
                 this.Controls.Add(pictureBox);
             }
             LabelText.Text = $"Seleccionar Opción para {direccion}";
@@ -120,8 +121,6 @@ namespace Proyecto
                             pictureBox.Image = null;
                             break;
                     }
-                    //excentricidad.png
-                    //restriccion.png
                 }
                 catch (FileNotFoundException ex)
                 {
