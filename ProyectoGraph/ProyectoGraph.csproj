@@ -114,6 +114,12 @@
     <Compile Include="Calculadora.Designer.cs">
       <DependentUpon>Calculadora.cs</DependentUpon>
     </Compile>
+    <Compile Include="CompressionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CompressionControl.Designer.cs">
+      <DependentUpon>CompressionControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Opciones.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,8 +128,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TensionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TensionControl.Designer.cs">
+      <DependentUpon>TensionControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Calculadora.resx">
       <DependentUpon>Calculadora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompressionControl.resx">
+      <DependentUpon>CompressionControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Opciones.resx">
       <DependentUpon>Opciones.cs</DependentUpon>
@@ -138,6 +153,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TensionControl.resx">
+      <DependentUpon>TensionControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

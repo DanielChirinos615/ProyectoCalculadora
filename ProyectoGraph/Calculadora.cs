@@ -19,140 +19,14 @@ namespace ProyectoGraph
 {
     public partial class Calculadora : Form
     {
-        static double pi = 3.1416;
-        static double E = 200000;
-        static double FyA36 = 250;
-        static double FyA572 = 350;
-        double KLr = 0, KLx = 0, KLz = 0, Fy;
-        Dictionary<string, double> tiposDeAcero = new Dictionary<string, double>();
-        private Dictionary<string, SeccionData> seccionesData = new Dictionary<string, SeccionData>();
         public Calculadora()
         {
             InitializeComponent();
-            ExcelPackage.LicenseContext = ExcelLicenseContext.NonCommercial;
-            CargarDatosEnComboBox();
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void Compression_Load(object sender, EventArgs e)
         {
-
-        }
-
-        private void CargarDatosEnComboBox()
-        {
-            string fileName = "secciones.xlsx";
-
-            string archivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-
-
-            if (File.Exists(archivo))
-            {
-                using (ExcelPackage package = new ExcelPackage(new FileInfo(archivo)))
-                {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                    int rowCount = worksheet.Dimension.Rows;
-
-                    for (int row = 2; row <= rowCount; row++) 
-                    {
-                        string seccion = worksheet.Cells[row, 1].Text;
-                        string areaText = worksheet.Cells[row, 2].Text;
-                        string radioxText = worksheet.Cells[row, 3].Text;
-                        string radiozText = worksheet.Cells[row, 4].Text;
-                        string wtText = worksheet.Cells[row, 5].Text;
-
-                        if (string.IsNullOrWhiteSpace(seccion) &&
-                            string.IsNullOrWhiteSpace(areaText) &&
-                            string.IsNullOrWhiteSpace(radioxText) &&
-                            string.IsNullOrWhiteSpace(radiozText) &&
-                            string.IsNullOrWhiteSpace(wtText))
-                        {
-                            // Fila vacía, continuar con la siguiente fila
-                            continue;
-                        }
-
-                        if (double.TryParse(areaText, out double area) &&
-                            double.TryParse(radioxText, out double radiox) &&
-                            double.TryParse(radiozText, out double radioz) &&
-                            double.TryParse(wtText, out double wt))
-                        {
-                            seccionesData[seccion] = new SeccionData
-                            {
-                                Area = area,
-                                RadioX = radiox,
-                                RadioZ = radioz,
-                                WT = wt
-                            };
-
-                            comboBox1.Items.Add(seccion);
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Error al convertir los datos de la fila {row}. Verifica el formato del archivo Excel.\n" +
-                                            $"Sección: {seccion}, Área: {areaText}, RadioX: {radioxText}, RadioZ: {radiozText}, W/T: {wtText}");
-                        }
-                    }
-                    if (comboBox1.Items.Count > 0)
-                    {
-                        comboBox1.SelectedIndex = 0;
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("El archivo Excel no se encontró.");
-            }
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string seccionSeleccionada = comboBox1.SelectedItem.ToString();
-            if (seccionesData.ContainsKey(seccionSeleccionada))
-            {
-                SeccionData data = seccionesData[seccionSeleccionada];
-                Area.Text = data.Area.ToString();
-                X.Text = data.RadioX.ToString();
-                Z.Text = data.RadioZ.ToString();
-                Wt.Text = data.WT.ToString();
-            }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            tiposDeAcero.Add("FyA36", FyA36);
-            tiposDeAcero.Add("FyA572", FyA572);
-
-            foreach (var tipoDeAcero in tiposDeAcero.Keys)
-            {
-                comboBox2.Items.Add(tipoDeAcero);
-            }
-        }
-        public class SeccionData
-        {
-            public double Area { get; set; }
-            public double RadioX { get; set; }
-            public double RadioZ { get; set; }
-            public double WT { get; set; }
-        }
-
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string tipoSeleccionado = comboBox2.SelectedItem.ToString();
-
-            if (tiposDeAcero.TryGetValue(tipoSeleccionado, out double valorAcero))
-            {
-                Fy = valorAcero;
-                labelAcero.Text = $"Valor del acero: {valorAcero}";
-            }
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
+            MostrarControlInicial();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -163,144 +37,45 @@ namespace ProyectoGraph
                 UseShellExecute = true
             });
         }
-
-        private void Calculo_Click(object sender, EventArgs e)
+        private void tensionButton_Click(object sender, EventArgs e)
         {
-            if (Fy == 0)
-            {
-                MessageBox.Show("Por favor, seleccione un tipo de acero.", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; 
-            }
-
-            double LX, LZ;
-            if (!double.TryParse(XBox.Text, out LX) || !double.TryParse(ZBox.Text, out LZ))
-            {
-                MessageBox.Show("Por favor, ingrese valores válidos para las longitudes.","", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string seccionSeleccionada = comboBox1.SelectedItem.ToString();
-            if (!seccionesData.TryGetValue(seccionSeleccionada, out SeccionData seccionData))
-            {
-                MessageBox.Show("Seleccione una sección válida.");
-                return;
-            }
-
-            double area = seccionData.Area;
-            double radioX = seccionData.RadioX;
-            double radioZ = seccionData.RadioZ;
-            double wt = seccionData.WT;
-
-            // Cálculo para X
-            double ResultadoX = (LX * 100) / radioX;
-            double resultadoXValor = CalcularResultado(ResultadoX, "X");
-
-            // Cálculo para Z
-            double ResultadoZ = (LZ * 100) / radioZ;
-            double resultadoZValor = CalcularResultado(ResultadoZ, "Z");
-
-            // Mostrar resultados
-            if (double.IsNaN(resultadoXValor))
-            {
-                labelX.Text = "Sobrepasa el limite de esbeltez en X";
-            }
-            else
-            {
-                labelX.Text = $"KL/rx: {resultadoXValor}";
-            }
-
-            if (double.IsNaN(resultadoZValor))
-            {
-                labelZ.Text = "Sobrepasa el limite de esbeltez en Z";
-            }
-            else
-            {
-                labelZ.Text = $"KL/rz: {resultadoZValor}";
-            }
-
-            // Calcular KLr
-            if (!double.IsNaN(resultadoXValor) && !double.IsNaN(resultadoZValor))
-            {
-                KLr = resultadoXValor > resultadoZValor ? resultadoXValor : resultadoZValor;
-            }
-            else if (!double.IsNaN(resultadoXValor))
-            {
-                KLr = resultadoXValor;
-            }
-            else if (!double.IsNaN(resultadoZValor))
-            {
-                KLr = resultadoZValor;
-            }
-            else
-            {
-                KLr = double.NaN;
-                MessageBox.Show("Ambas direcciones sobrepasan el límite de esbeltez.");
-            }
-
-            if (!double.IsNaN(KLr))
-            {
-                labelr.Text = $"KLr: {KLr}";
-            }
-            //Calcular los resultados faltantes
-            double Cc = (Math.PI * Math.Sqrt(2 * E / Fy));
-            double Fa = 0;
-            double Fcr1 = ((1.677 * 0.677) * (wt / (80 / Math.Sqrt(Fy / 6.9444)))) * Fy;
-            double Fcr2 = (0.0332 * Math.Pow(Math.PI, 2) * E) / Math.Pow(wt, 2);
-
-            if (KLr > Cc)
-            {
-                Fa = (Math.Pow(Math.PI, 2) * E) / (Math.Pow(KLr, 2));
-            }
-            else if (KLr < Cc && wt < (80 / Math.Sqrt(Fy / 6.9444)))
-            {
-                Fa = (1 - 0.5 * (Math.Pow((KLr / Cc), 2))) * Fy;
-            }
-            else if (KLr < Cc && wt > (80 / Math.Sqrt(Fy / 6.9444)) && wt <= 144 / Math.Sqrt(Fy / 6.9444))
-            {
-                Fa = (1 - 0.5 * (Math.Pow((KLr / Cc), 2))) * Fcr1;
-            }
-            else if (KLr < Cc && wt > 144 / Math.Sqrt(Fy / 6.9444))
-            {
-                Fa = (1 - 0.5 * (Math.Pow((KLr / Cc), 2))) * Fcr2;
-            }
-
-            double Ca = (area * Fa) * 100;
-
-            labelr.Text = $"KL/r: {KLr}";
-            labelCc.Text = $"Cc: {Cc}";
-            labelFa.Text = $"Fa: {Fa}";
-            labelwt.Text = $"W / T: {wt}";
-            labelfy.Text = $"Fy: {Fy}";
-            labelCa.Text = $"Ca: {Ca}";
-
+            Escenas_Tension();
         }
-        private double CalcularResultado(double resultado, string direccion)
+
+        private void Escenas_Tension()
         {
-            if (resultado >= 0 && resultado <= 120)
-            {
-                return MostrarMenuOpciones(resultado, 1, direccion);
-            }
-            else if (resultado > 120 && resultado <= 250)
-            {
-                return MostrarMenuOpciones(resultado, 2, direccion);
-            }
-            else
-            {
-                return double.NaN;
-            }
+            TensionControl tensionControl = new TensionControl();
+            panel1.Controls.Clear();
+
+            tensionControl.Dock = DockStyle.Fill;
+
+            panel1.Controls.Add(tensionControl);
         }
-        private double MostrarMenuOpciones(double resultado, int tipoMenu, string direccion)
+
+        private void compressionButton_Click(object sender, EventArgs e)
         {
-            using (Opciones opcionesForm = new Opciones(resultado, tipoMenu, direccion))
-            {
-                if (opcionesForm.ShowDialog() == DialogResult.OK)
-                {
-                    string opcionSeleccionada = opcionesForm.OpcionSeleccionada;
-                    double resultadoCalculado = opcionesForm.ResultadoCalculado;
-                    return resultadoCalculado;
-                }
-            }
-            return double.NaN;
+            Escenas_Compression();
         }
+
+        private void Escenas_Compression()
+        {
+            CompressionControl compressionControl = new CompressionControl();
+
+            panel1.Controls.Clear();
+
+            compressionControl.Dock = DockStyle.Fill;
+
+            panel1.Controls.Add(compressionControl);
+        }
+
+        private void MostrarControlInicial()
+        {
+            CompressionControl controlInicial = new CompressionControl();
+
+            controlInicial.Dock = DockStyle.Fill;
+
+            panel1.Controls.Add(controlInicial);
+        }
+
     }
 }
