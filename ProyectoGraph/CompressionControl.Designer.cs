@@ -37,8 +37,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.Calculo = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -78,7 +76,7 @@
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Location = new System.Drawing.Point(15, 40);
+            this.groupBox3.Location = new System.Drawing.Point(12, 12);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(197, 130);
             this.groupBox3.TabIndex = 14;
@@ -90,36 +88,32 @@
             this.Wt.AutoSize = true;
             this.Wt.Location = new System.Drawing.Point(120, 102);
             this.Wt.Name = "Wt";
-            this.Wt.Size = new System.Drawing.Size(41, 13);
+            this.Wt.Size = new System.Drawing.Size(0, 13);
             this.Wt.TabIndex = 7;
-            this.Wt.Text = "label11";
             // 
             // Z
             // 
             this.Z.AutoSize = true;
             this.Z.Location = new System.Drawing.Point(120, 75);
             this.Z.Name = "Z";
-            this.Z.Size = new System.Drawing.Size(41, 13);
+            this.Z.Size = new System.Drawing.Size(0, 13);
             this.Z.TabIndex = 6;
-            this.Z.Text = "label10";
             // 
             // X
             // 
             this.X.AutoSize = true;
             this.X.Location = new System.Drawing.Point(120, 48);
             this.X.Name = "X";
-            this.X.Size = new System.Drawing.Size(35, 13);
+            this.X.Size = new System.Drawing.Size(0, 13);
             this.X.TabIndex = 5;
-            this.X.Text = "label9";
             // 
             // Area
             // 
             this.Area.AutoSize = true;
             this.Area.Location = new System.Drawing.Point(120, 20);
             this.Area.Name = "Area";
-            this.Area.Size = new System.Drawing.Size(35, 13);
+            this.Area.Size = new System.Drawing.Size(0, 13);
             this.Area.TabIndex = 4;
-            this.Area.Text = "label8";
             // 
             // label7
             // 
@@ -157,24 +151,6 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Area de Perfil angular =";
             // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(86, 13);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(281, 21);
-            this.comboBox1.TabIndex = 11;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 13);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "SECCIONES";
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.Calculo);
@@ -182,7 +158,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.ZBox);
             this.groupBox1.Controls.Add(this.XBox);
-            this.groupBox1.Location = new System.Drawing.Point(15, 176);
+            this.groupBox1.Location = new System.Drawing.Point(12, 148);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(382, 112);
             this.groupBox1.TabIndex = 13;
@@ -223,6 +199,7 @@
             this.ZBox.Name = "ZBox";
             this.ZBox.Size = new System.Drawing.Size(217, 20);
             this.ZBox.TabIndex = 1;
+            this.ZBox.Text = "0";
             // 
             // XBox
             // 
@@ -230,11 +207,12 @@
             this.XBox.Name = "XBox";
             this.XBox.Size = new System.Drawing.Size(217, 20);
             this.XBox.TabIndex = 0;
+            this.XBox.Text = "0";
             // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.labelCa);
-            this.groupBox6.Location = new System.Drawing.Point(15, 466);
+            this.groupBox6.Location = new System.Drawing.Point(12, 438);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(382, 37);
             this.groupBox6.TabIndex = 18;
@@ -246,16 +224,16 @@
             this.labelCa.AutoSize = true;
             this.labelCa.Location = new System.Drawing.Point(7, 16);
             this.labelCa.Name = "labelCa";
-            this.labelCa.Size = new System.Drawing.Size(26, 13);
+            this.labelCa.Size = new System.Drawing.Size(32, 13);
             this.labelCa.TabIndex = 7;
-            this.labelCa.Text = "Ca: ";
+            this.labelCa.Text = "Ca: 0";
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.labelAcero);
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.comboBox2);
-            this.groupBox4.Location = new System.Drawing.Point(218, 40);
+            this.groupBox4.Location = new System.Drawing.Point(215, 12);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(179, 130);
             this.groupBox4.TabIndex = 15;
@@ -296,7 +274,7 @@
             this.groupBox5.Controls.Add(this.labelFa);
             this.groupBox5.Controls.Add(this.labelwt);
             this.groupBox5.Controls.Add(this.labelfy);
-            this.groupBox5.Location = new System.Drawing.Point(15, 328);
+            this.groupBox5.Location = new System.Drawing.Point(12, 300);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(382, 132);
             this.groupBox5.TabIndex = 17;
@@ -308,51 +286,51 @@
             this.labelr.AutoSize = true;
             this.labelr.Location = new System.Drawing.Point(6, 16);
             this.labelr.Name = "labelr";
-            this.labelr.Size = new System.Drawing.Size(31, 13);
+            this.labelr.Size = new System.Drawing.Size(40, 13);
             this.labelr.TabIndex = 2;
-            this.labelr.Text = "KL/r:";
+            this.labelr.Text = "KL/r: 0";
             // 
             // labelCc
             // 
             this.labelCc.AutoSize = true;
             this.labelCc.Location = new System.Drawing.Point(6, 41);
             this.labelCc.Name = "labelCc";
-            this.labelCc.Size = new System.Drawing.Size(23, 13);
+            this.labelCc.Size = new System.Drawing.Size(32, 13);
             this.labelCc.TabIndex = 3;
-            this.labelCc.Text = "Cc:";
+            this.labelCc.Text = "Cc: 0";
             // 
             // labelFa
             // 
             this.labelFa.AutoSize = true;
             this.labelFa.Location = new System.Drawing.Point(5, 65);
             this.labelFa.Name = "labelFa";
-            this.labelFa.Size = new System.Drawing.Size(22, 13);
+            this.labelFa.Size = new System.Drawing.Size(31, 13);
             this.labelFa.TabIndex = 4;
-            this.labelFa.Text = "Fa:";
+            this.labelFa.Text = "Fa: 0";
             // 
             // labelwt
             // 
             this.labelwt.AutoSize = true;
             this.labelwt.Location = new System.Drawing.Point(5, 89);
             this.labelwt.Name = "labelwt";
-            this.labelwt.Size = new System.Drawing.Size(39, 13);
+            this.labelwt.Size = new System.Drawing.Size(48, 13);
             this.labelwt.TabIndex = 5;
-            this.labelwt.Text = "W / T:";
+            this.labelwt.Text = "W / T: 0";
             // 
             // labelfy
             // 
             this.labelfy.AutoSize = true;
             this.labelfy.Location = new System.Drawing.Point(7, 113);
             this.labelfy.Name = "labelfy";
-            this.labelfy.Size = new System.Drawing.Size(24, 13);
+            this.labelfy.Size = new System.Drawing.Size(30, 13);
             this.labelfy.TabIndex = 6;
-            this.labelfy.Text = "Fy: ";
+            this.labelfy.Text = "Fy: 0";
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.labelX);
             this.groupBox2.Controls.Add(this.labelZ);
-            this.groupBox2.Location = new System.Drawing.Point(15, 288);
+            this.groupBox2.Location = new System.Drawing.Point(12, 260);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(382, 34);
             this.groupBox2.TabIndex = 16;
@@ -364,33 +342,31 @@
             this.labelX.AutoSize = true;
             this.labelX.Location = new System.Drawing.Point(6, 16);
             this.labelX.Name = "labelX";
-            this.labelX.Size = new System.Drawing.Size(36, 13);
+            this.labelX.Size = new System.Drawing.Size(45, 13);
             this.labelX.TabIndex = 0;
-            this.labelX.Text = "KL/rx:";
+            this.labelX.Text = "KL/rx: 0";
             // 
             // labelZ
             // 
             this.labelZ.AutoSize = true;
             this.labelZ.Location = new System.Drawing.Point(200, 16);
             this.labelZ.Name = "labelZ";
-            this.labelZ.Size = new System.Drawing.Size(36, 13);
+            this.labelZ.Size = new System.Drawing.Size(45, 13);
             this.labelZ.TabIndex = 1;
-            this.labelZ.Text = "KL/rz:";
+            this.labelZ.Text = "KL/rz: 0";
             // 
-            // Control
+            // CompressionControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox2);
-            this.Name = "Control";
-            this.Size = new System.Drawing.Size(405, 514);
+            this.Name = "CompressionControl";
+            this.Size = new System.Drawing.Size(405, 481);
             this.Load += new System.EventHandler(this.Control_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -405,7 +381,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -420,8 +395,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button Calculo;
         private System.Windows.Forms.Label label3;

@@ -120,6 +120,7 @@
     <Compile Include="CompressionControl.Designer.cs">
       <DependentUpon>CompressionControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CompressionControlState.cs" />
     <Compile Include="Opciones.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +135,7 @@
     <Compile Include="TensionControl.Designer.cs">
       <DependentUpon>TensionControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="TensionControlState.cs" />
     <EmbeddedResource Include="Calculadora.resx">
       <DependentUpon>Calculadora.cs</DependentUpon>
     </EmbeddedResource>

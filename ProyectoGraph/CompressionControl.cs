@@ -11,18 +11,55 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
+using ProyectoGraph;
 
 namespace Proyecto
 {
     public partial class CompressionControl : UserControl
     {
-        public CompressionControl()
+        static double pi = 3.1416;
+        static double E = 200000;
+        static double FyA36 = 250;
+        static double FyA572 = 350;
+        double KLr = 0, KLx = 0, KLz = 0, Fy;
+        private Calculadora calculadora;
+        Dictionary<string, double> tiposDeAcero = new Dictionary<string, double>();
+        private Dictionary<string, SeccionData> seccionesData = new Dictionary<string, SeccionData>();
+
+        public CompressionControl(Calculadora calculadora)
         {
             InitializeComponent();
+            this.calculadora = calculadora;
+
             ExcelPackage.LicenseContext = ExcelLicenseContext.NonCommercial;
-            CargarDatosEnComboBox();
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            calculadora.SeccionesComboBox.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
+
+            LlenarComboBoxSecciones(calculadora.GetSeccionesData());
+            CargarDatosEnComboBox();
+        }
+        public void ActualizarSeccionSeleccionada(string seccionSeleccionada)
+        {
+            if (seccionesData.ContainsKey(seccionSeleccionada))
+            {
+                SeccionData data = seccionesData[seccionSeleccionada];
+                Area.Text = data.Area.ToString();
+                X.Text = data.RadioX.ToString();
+                Z.Text = data.RadioZ.ToString();
+                Wt.Text = data.WT.ToString();
+            }
+        }
+        public void LlenarComboBoxSecciones(Dictionary<string, SeccionData> secciones)
+        {
+            calculadora.SeccionesComboBox.Items.Clear();
+            foreach (var seccion in secciones.Keys)
+            {
+                calculadora.SeccionesComboBox.Items.Add(seccion);
+            }
+            if (calculadora.SeccionesComboBox.Items.Count > 0)
+            {
+                calculadora.SeccionesComboBox.SelectedIndex = 0;
+            }
         }
 
         private void Control_Load(object sender, EventArgs e)
@@ -35,13 +72,6 @@ namespace Proyecto
                 comboBox2.Items.Add(tipoDeAcero);
             }
         }
-        static double pi = 3.1416;
-        static double E = 200000;
-        static double FyA36 = 250;
-        static double FyA572 = 350;
-        double KLr = 0, KLx = 0, KLz = 0, Fy;
-        Dictionary<string, double> tiposDeAcero = new Dictionary<string, double>();
-        private Dictionary<string, SeccionData> seccionesData = new Dictionary<string, SeccionData>();
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -51,12 +81,12 @@ namespace Proyecto
         private void CargarDatosEnComboBox()
         {
             string fileName = "secciones.xlsx";
-
             string archivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-
 
             if (File.Exists(archivo))
             {
+                OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
                 using (ExcelPackage package = new ExcelPackage(new FileInfo(archivo)))
                 {
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
@@ -93,7 +123,7 @@ namespace Proyecto
                                 WT = wt
                             };
 
-                            comboBox1.Items.Add(seccion);
+                            calculadora.SeccionesComboBox.Items.Add(seccion);
                         }
                         else
                         {
@@ -101,9 +131,9 @@ namespace Proyecto
                                             $"Sección: {seccion}, Área: {areaText}, RadioX: {radioxText}, RadioZ: {radiozText}, W/T: {wtText}");
                         }
                     }
-                    if (comboBox1.Items.Count > 0)
+                    if (calculadora.SeccionesComboBox.Items.Count > 0)
                     {
-                        comboBox1.SelectedIndex = 0;
+                        calculadora.SeccionesComboBox.SelectedIndex = 0;
                     }
                 }
             }
@@ -115,15 +145,8 @@ namespace Proyecto
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string seccionSeleccionada = comboBox1.SelectedItem.ToString();
-            if (seccionesData.ContainsKey(seccionSeleccionada))
-            {
-                SeccionData data = seccionesData[seccionSeleccionada];
-                Area.Text = data.Area.ToString();
-                X.Text = data.RadioX.ToString();
-                Z.Text = data.RadioZ.ToString();
-                Wt.Text = data.WT.ToString();
-            }
+            string seccionSeleccionada = calculadora.SeccionesComboBox.SelectedItem.ToString();
+            ActualizarSeccionSeleccionada(seccionSeleccionada);
         }
         public class SeccionData
         {
@@ -170,10 +193,6 @@ namespace Proyecto
         private void tensionButton_Click(object sender, EventArgs e)
         {
         }
-        private void Escenas_Tension()
-        {
-
-        }
 
         private void Calculo_Click_1(object sender, EventArgs e)
         {
@@ -190,7 +209,7 @@ namespace Proyecto
                 return;
             }
 
-            string seccionSeleccionada = comboBox1.SelectedItem.ToString();
+            string seccionSeleccionada = calculadora.SeccionesComboBox.SelectedItem.ToString();
             if (!seccionesData.TryGetValue(seccionSeleccionada, out SeccionData seccionData))
             {
                 MessageBox.Show("Seleccione una sección válida.");
@@ -312,7 +331,51 @@ namespace Proyecto
             }
             return double.NaN;
         }
+        public CompressionControlState GetState()
+        {
+            return new CompressionControlState
+            {
+                SelectedSection = calculadora.SeccionesComboBox.SelectedItem?.ToString(),
+                SelectedSteel = comboBox2.SelectedItem?.ToString(),
+                Lx = double.TryParse(XBox.Text, out double lx) ? lx : 0,
+                Lz = double.TryParse(ZBox.Text, out double lz) ? lz : 0,
+                LabelArea = Area.Text,
+                Fy = this.Fy,
+                SeccionesData = this.seccionesData,
+                LabelX = labelX.Text,
+                LabelZ = labelZ.Text,
+                LabelWt = Wt.Text,
+                LabelKLr = labelr.Text,
+                LabelCc = labelCc.Text,
+                LabelFa = labelFa.Text,
+                LabelCa = labelCa.Text
+            };
+        }
 
+        public void SetState(CompressionControlState state)
+        {
+            if (state.SelectedSection != null)
+            {
+                calculadora.SeccionesComboBox.SelectedItem = state.SelectedSection;
+            }
+
+            if (state.SelectedSteel != null)
+            {
+                comboBox2.SelectedItem = state.SelectedSteel;
+            }
+            this.Fy = state.Fy;
+            this.seccionesData = state.SeccionesData;
+            XBox.Text = state.Lx.ToString();
+            ZBox.Text = state.Lz.ToString();
+            Area.Text = state.LabelArea;
+            labelX.Text = state.LabelX;
+            labelZ.Text = state.LabelZ;
+            Wt.Text = state.LabelWt;
+            labelr.Text = state.LabelKLr;
+            labelCc.Text = state.LabelCc;
+            labelFa.Text = state.LabelFa;
+            labelCa.Text = state.LabelCa;
+        }
     }
 }
 
