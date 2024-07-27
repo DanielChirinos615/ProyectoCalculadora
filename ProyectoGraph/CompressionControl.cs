@@ -17,18 +17,21 @@ namespace Proyecto
 {
     public partial class CompressionControl : UserControl
     {
-        static double pi = 3.1416;
         static double E = 200000;
         static double FyA36 = 250;
         static double FyA572 = 350;
-        double KLr = 0, KLx = 0, KLz = 0, Fy;
+        double KLr = 0, Fy;
         private Calculadora calculadora;
         Dictionary<string, double> tiposDeAcero = new Dictionary<string, double>();
         private Dictionary<string, SeccionData> seccionesData = new Dictionary<string, SeccionData>();
 
-        public CompressionControl(Calculadora calculadora)
+        public CompressionControl()
         {
             InitializeComponent();
+        }
+
+        public CompressionControl(Calculadora calculadora) : this()
+        {
             this.calculadora = calculadora;
 
             ExcelPackage.LicenseContext = ExcelLicenseContext.NonCommercial;
@@ -36,8 +39,13 @@ namespace Proyecto
             comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
 
             LlenarComboBoxSecciones(calculadora.GetSeccionesData());
-            CargarDatosEnComboBox();
         }
+
+        public void CargarDatos()
+        {
+            calculadora.CargarDatosEnComboBox();
+        }
+
         public void ActualizarSeccionSeleccionada(string seccionSeleccionada)
         {
             if (seccionesData.ContainsKey(seccionSeleccionada))
@@ -51,6 +59,7 @@ namespace Proyecto
         }
         public void LlenarComboBoxSecciones(Dictionary<string, SeccionData> secciones)
         {
+            seccionesData = secciones;
             calculadora.SeccionesComboBox.Items.Clear();
             foreach (var seccion in secciones.Keys)
             {
@@ -73,87 +82,10 @@ namespace Proyecto
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CargarDatosEnComboBox()
-        {
-            string fileName = "secciones.xlsx";
-            string archivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-
-            if (File.Exists(archivo))
-            {
-                OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-
-                using (ExcelPackage package = new ExcelPackage(new FileInfo(archivo)))
-                {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                    int rowCount = worksheet.Dimension.Rows;
-
-                    for (int row = 2; row <= rowCount; row++)
-                    {
-                        string seccion = worksheet.Cells[row, 1].Text;
-                        string areaText = worksheet.Cells[row, 2].Text;
-                        string radioxText = worksheet.Cells[row, 3].Text;
-                        string radiozText = worksheet.Cells[row, 4].Text;
-                        string wtText = worksheet.Cells[row, 5].Text;
-
-                        if (string.IsNullOrWhiteSpace(seccion) &&
-                            string.IsNullOrWhiteSpace(areaText) &&
-                            string.IsNullOrWhiteSpace(radioxText) &&
-                            string.IsNullOrWhiteSpace(radiozText) &&
-                            string.IsNullOrWhiteSpace(wtText))
-                        {
-                            // Fila vacía, continuar con la siguiente fila
-                            continue;
-                        }
-
-                        if (double.TryParse(areaText, out double area) &&
-                            double.TryParse(radioxText, out double radiox) &&
-                            double.TryParse(radiozText, out double radioz) &&
-                            double.TryParse(wtText, out double wt))
-                        {
-                            seccionesData[seccion] = new SeccionData
-                            {
-                                Area = area,
-                                RadioX = radiox,
-                                RadioZ = radioz,
-                                WT = wt
-                            };
-
-                            calculadora.SeccionesComboBox.Items.Add(seccion);
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Error al convertir los datos de la fila {row}. Verifica el formato del archivo Excel.\n" +
-                                            $"Sección: {seccion}, Área: {areaText}, RadioX: {radioxText}, RadioZ: {radiozText}, W/T: {wtText}");
-                        }
-                    }
-                    if (calculadora.SeccionesComboBox.Items.Count > 0)
-                    {
-                        calculadora.SeccionesComboBox.SelectedIndex = 0;
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("El archivo Excel no se encontró.");
-            }
-        }
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string seccionSeleccionada = calculadora.SeccionesComboBox.SelectedItem.ToString();
             ActualizarSeccionSeleccionada(seccionSeleccionada);
-        }
-        public class SeccionData
-        {
-            public double Area { get; set; }
-            public double RadioX { get; set; }
-            public double RadioZ { get; set; }
-            public double WT { get; set; }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -167,32 +99,6 @@ namespace Proyecto
             }
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-            {
-                FileName = "https://ssg-s.pe",
-                UseShellExecute = true
-            });
-        }
-
-        private void label9_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tensionButton_Click(object sender, EventArgs e)
-        {
-        }
 
         private void Calculo_Click_1(object sender, EventArgs e)
         {
@@ -348,7 +254,8 @@ namespace Proyecto
                 LabelKLr = labelr.Text,
                 LabelCc = labelCc.Text,
                 LabelFa = labelFa.Text,
-                LabelCa = labelCa.Text
+                LabelCa = labelCa.Text,
+                Acero = labelAcero.Text
             };
         }
 
@@ -375,6 +282,7 @@ namespace Proyecto
             labelCc.Text = state.LabelCc;
             labelFa.Text = state.LabelFa;
             labelCa.Text = state.LabelCa;
+            labelAcero.Text = state.Acero;
         }
     }
 }

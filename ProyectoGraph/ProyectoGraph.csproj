@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SeccionData.cs" />
     <Compile Include="TensionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

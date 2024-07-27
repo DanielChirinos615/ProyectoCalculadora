@@ -20,7 +20,8 @@ namespace Proyecto
         public string LabelCc { get; set; }
         public string LabelFa { get; set; }
         public string LabelCa { get; set; }
+        public string Acero { get; set; }
         public double Fy { get; set; }
-        public Dictionary<string, CompressionControl.SeccionData> SeccionesData { get; set; }
+        public Dictionary<string, SeccionData> SeccionesData { get; set; }
     }
 }

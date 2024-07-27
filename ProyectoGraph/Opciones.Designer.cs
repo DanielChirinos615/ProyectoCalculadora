@@ -74,6 +74,7 @@
             this.MaximizeBox = false;
             this.Name = "Opciones";
             this.ShowInTaskbar = false;
+            this.Load += new System.EventHandler(this.Opciones_Load_1);
             this.ResumeLayout(false);
             this.PerformLayout();
 
